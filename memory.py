@@ -2,7 +2,7 @@ import json
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler
 
-TOKEN = "8135909690:AAGMgtdO6w71UyCewgSc3qnMxC_0RAqTdMU"
+TOKEN = "IL_TUO_TOKEN"
 FILE_PLAYERS = "players.json"
 
 # Carica i dati dal file JSON
