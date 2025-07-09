@@ -2,7 +2,7 @@ import json
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler
 
-REMOVED_TOKEN
+TOKEN = "IL_TUO_TOKEN"
 FILE_PLAYERS = "players.json"
 FILE_REGISTERED = "registered_users.json"
 REMOVED_ADMIN_ID
