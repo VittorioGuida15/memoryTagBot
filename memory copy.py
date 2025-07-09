@@ -48,13 +48,13 @@ def save_player_tags(tags):
 async def auto_register_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reload_data()
     user = update.effective_user
-    name = user.full_name
-    user_id = str(user.id)
+    name = user.username or user.first_name.lower()
+    user_id = user.id
 
-    if user_id not in REGISTERED_USERS:
-        REGISTERED_USERS[user_id] = name
-        save_registered_users(REGISTERED_USERS)
-        print(f"✅ Registrato automaticamente: {user_id} -> {name}")
+    if name not in PLAYER_TAGS:
+        PLAYER_TAGS[name] = user_id
+        save_player_tags(PLAYER_TAGS)
+        print(f"✅ Registrato automaticamente: {name} -> {user_id}")
 
 # register
 async def register(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler("search", search))
     app.add_handler(CommandHandler("listplayers", list_players))
 
-    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), auto_register_user))
+    #app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), auto_register_user))
  
     print("Bot in esecuzione...")
     app.run_polling()
