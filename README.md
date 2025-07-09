@@ -38,7 +38,23 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
    ```bash
    TOKEN = "TUO_TOKEN_BOT"
 
-3. **Avvia il bot**
+3. **Installa le dipendenze**
+    ```bash
+    pip install -r requirements.txt  
+
+4. **Avvia il bot**
     ```bash
     python memory.py
+    
+## Deploy su PythonAnywhere
+1. **Crea un account gratuito su PythonAnywhere.**
 
+2. **Carica i file memory.py, players.json (vuoto o già popolato) e requirements.txt nella tua directory di lavoro.**
+
+3. **Installa le librerie necessarie in una console Bash:**
+    ```bash    
+    pip install --user -r requirements.txt
+
+4. **Avvia il bot**
+    ```bash
+    python memory.py
