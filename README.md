@@ -1,6 +1,6 @@
-# memoryTagBot – Telegram Tagging Assistant
+# memoryIdBot e – Telegram Id Assistant
 
-Un semplice bot Telegram scritto in Python che rileva automaticamente la presenza di determinati nomi nei messaggi e restituisce i relativi tag configurati, utile per coordinare squadre, clan o gruppi di gioco.
+Un semplice bot Telegram scritto in Python che rileva automaticamente la presenza di determinati nomi nei messaggi e restituisce i relativi id.
 
 ---
 
