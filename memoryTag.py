@@ -1,3 +1,4 @@
+#variante che utilizza i tag telegram
 import json
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler
