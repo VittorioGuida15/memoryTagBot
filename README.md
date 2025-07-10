@@ -53,12 +53,12 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
 ## Deploy su PythonAnywhere
 1. **Crea un account gratuito su PythonAnywhere.**
 
-2. **Carica i file memory.py, players.json (vuoto o già popolato) e requirements.txt nella tua directory di lavoro.**
+2. **Carica i file memory.py, players.json (vuoto o già popolato) nella tua directory di lavoro.**
 
-3. **Installa le librerie necessarie in una console Bash:**
+3. **Installa le librerie necessarie nella console Bash aperta dal file memory.py:**
     ```bash    
-    pip install --user -r requirements.txt
+    pip install python-telegram-bot>=20.0
 
 4. **Avvia il bot**
     ```bash
-    python3.10 /home/.../memory/memory.py
+    python3.10 memory.py
