@@ -62,4 +62,3 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
 4. **Avvia il bot**
     ```bash
     python3.10 /home/.../memory/memory.py
-
