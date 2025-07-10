@@ -4,14 +4,17 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
 
 ---
 
-##  Funzionalità principali
 
--  **Aggiunta giocatori:** aggiungi un giocatore con il suo tag (es. @username).
--  **Aggiorna giocatori:** modifica il tag di un giocatore esistente.
--  **Rimuovi giocatori:** rimuovi un giocatore registrato.
--  **Lista giocatori:** visualizza tutti i giocatori registrati.
--  **Controllo messaggi:** verifica se un messaggio contiene uno o più nomi registrati.
--  **Ascolto automatico:** (facoltativo) monitora ogni messaggio nella chat e tagga i giocatori se nominati.
+## Comandi disponibili nel bot:
+
+/register - Registra il tuo ID Telegram con il tuo nome
+/tagga - Tagga i membri presenti nel messaggio corrente
+/link - Collega un nickname a un ID Telegram (solo admin)
+/syncname - Sincronizza il nome di un utente registrato tramite il suo ID (solo admin)
+/update - Aggiorna il nick di un utente (solo admin)
+/remove - Rimuove un utente dal sistema (solo admin)
+/search - Cerca l'ID di un utente (solo admin)
+/listplayers - Mostra tutti i nickname registrati (solo admin)
 
 ---
 
