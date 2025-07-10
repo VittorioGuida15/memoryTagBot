@@ -1,17 +1,20 @@
-# memoryTagBot – Telegram Tagging Assistant
+# memoryTagBot
 
-Un semplice bot Telegram scritto in Python che rileva automaticamente la presenza di determinati nomi nei messaggi e restituisce i relativi tag configurati, utile per coordinare squadre, clan o gruppi di gioco.
+Un semplice bot Telegram scritto in Python che rileva automaticamente la presenza di determinati nomi nei messaggi e restituisce i relativi id.
 
 ---
 
-##  Funzionalità principali
 
--  **Aggiunta giocatori:** aggiungi un giocatore con il suo tag (es. @username).
--  **Aggiorna giocatori:** modifica il tag di un giocatore esistente.
--  **Rimuovi giocatori:** rimuovi un giocatore registrato.
--  **Lista giocatori:** visualizza tutti i giocatori registrati.
--  **Controllo messaggi:** verifica se un messaggio contiene uno o più nomi registrati.
--  **Ascolto automatico:** (facoltativo) monitora ogni messaggio nella chat e tagga i giocatori se nominati.
+## Comandi disponibili nel bot:
+
+- /register - Registra il tuo ID Telegram con il tuo nome
+- /tagga - Tagga i membri presenti nel messaggio corrente
+- /link - Collega un nickname a un ID Telegram (solo admin)
+- /syncname - Sincronizza il nome di un utente registrato tramite il suo ID (solo admin)
+- /update - Aggiorna il nick di un utente (solo admin)
+- /remove - Rimuove un utente dal sistema (solo admin)
+- /search - Cerca l'ID di un utente (solo admin)
+- /listplayers - Mostra tutti i nickname registrati (solo admin)
 
 ---
 
@@ -32,11 +35,12 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
    git clone https://github.com/VittorioGuida15/memoryTagBot.git
    cd memoryTagBot
 
-2. **Configura il tuo token**
-  Apri il file memory.py e sostituisci il valore della variabile TOKEN con quello del tuo bot Telegram:
+2. **Configurazione**
+  Apri il file memory.py e sostituisci il valore delle variabili TOKEN e ADMIN_USER_ID:
 
    ```bash
    TOKEN = "TUO_TOKEN_BOT"
+   ADMIN_USER_ID = "ID_ADMIN"
 
 3. **Installa le dipendenze**
     ```bash
