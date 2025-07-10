@@ -1,4 +1,4 @@
-# memoryIdBot e – Telegram Id Assistant
+# memoryTagBot
 
 Un semplice bot Telegram scritto in Python che rileva automaticamente la presenza di determinati nomi nei messaggi e restituisce i relativi id.
 
