@@ -44,7 +44,7 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
 
 3. **Installa le dipendenze**
     ```bash
-    pip install -r requirements.txt  
+    pip install python-telegram-bot>=20.0  
 
 4. **Avvia il bot**
     ```bash
