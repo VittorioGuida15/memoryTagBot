@@ -35,11 +35,12 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
    git clone https://github.com/VittorioGuida15/memoryTagBot.git
    cd memoryTagBot
 
-2. **Configura il tuo token**
-  Apri il file memory.py e sostituisci il valore della variabile TOKEN con quello del tuo bot Telegram:
+2. **Configurazione**
+  Apri il file memory.py e sostituisci il valore delle variabili TOKEN e ADMIN_USER_ID:
 
    ```bash
    TOKEN = "TUO_TOKEN_BOT"
+   ADMIN_USER_ID = "ID_ADMIN"
 
 3. **Installa le dipendenze**
     ```bash
