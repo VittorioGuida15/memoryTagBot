@@ -5,7 +5,7 @@ from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTyp
 TOKEN = "IL_TUO_TOKEN"
 FILE_PLAYERS = "players.json"
 FILE_REGISTERED = "registered_users.json"
-REMOVED_ADMIN_ID
+ADMIN_USER_ID = "ID_ADMIN"
 
 
 # Carica i dati nei file JSON
