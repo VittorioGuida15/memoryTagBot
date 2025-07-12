@@ -237,23 +237,32 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if len(context.args) != 1:
-        await update.message.reply_text("❌ Usa il comando così: /cerca nome")
+        await update.message.reply_text("❌ Usa il comando così: /search nome")
         return
 
     query = context.args[0].lower()
-
     risultati = []
 
-    # Cerca per nome Telegram (REGISTERED_USERS)
-    for user_id, nome in REGISTERED_USERS.items():
-        if query in nome.lower():
-            risultati.append(f"TG: {nome} (ID: {user_id})")
+    # Primo ciclo: cerca per nome Telegram
+    for user_id, nome_tg in REGISTERED_USERS.items():
+        if query in nome_tg.lower():
+            # Cerca nickname Clash associato all'id
+            nick_clash = None
+            for nick, uid in PLAYER_TAGS.items():
+                if uid == user_id:
+                    nick_clash = nick
+                    break
+            if nick_clash:
+                risultati.append(f"Clash: {nick_clash} |TG: {nome_tg} | ID: {user_id}")
+            else:
+                risultati.append(f"Clash: {nick_clash} |TG: {nome_tg} | ID: {user_id}")
 
-    # Cerca per nickname Clash (PLAYER_TAGS)
-    for nick, user_id in PLAYER_TAGS.items():
-        if query == nick.lower():
-            nome_tg = REGISTERED_USERS.get(user_id, "Nome TG non trovato")
-            risultati.append(f"Clash: {nick}")
+    # Se non ho trovato nulla nel primo ciclo, cerco nel secondo
+    if not risultati:
+        for nick_clash, user_id in PLAYER_TAGS.items():
+            if query == nick_clash.lower():
+                nome_tg = REGISTERED_USERS.get(user_id, "Nome TG non trovato")
+                risultati.append(f"Clash: {nick_clash} |TG: {nome_tg} | ID: {user_id}")
 
     if risultati:
         await update.message.reply_text("🔍 Risultati ricerca:\n" + "\n".join(risultati))
