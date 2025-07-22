@@ -42,13 +42,14 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
    TOKEN = "TUO_TOKEN_BOT"
    ADMIN_USER_ID = "ID_ADMIN"
 
-  rinomina players.example.json in players.json e registered_users.example.json in registered_users.json.
+3. **File**
+   Rinomina players.example.json in players.json e registered_users.example.json in registered_users.json.
 
-3. **Installa le dipendenze**
+4. **Installa le dipendenze**
     ```bash
     pip install python-telegram-bot>=20.0  
 
-4. **Avvia il bot**
+5. **Avvia il bot**
     ```bash
     python memory.py
     
