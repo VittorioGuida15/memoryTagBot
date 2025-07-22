@@ -5,5 +5,5 @@
 .env
 
 #ignora file 
-players.json
-registered_users.json
+#players.json
+#registered_users.json
