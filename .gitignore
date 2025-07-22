@@ -7,3 +7,5 @@
 #ignora file 
 players.json
 registered_users.json
+players.example.json
+registered_users.example.json
