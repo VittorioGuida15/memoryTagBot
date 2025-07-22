@@ -43,7 +43,8 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
    ADMIN_USER_ID = "ID_ADMIN"
 
 3. **File**
-   - Rinomina players.example.json in players.json e registered_users.example.json in registered_users.json.
+   - Rinomina players.example.json in players.json
+   - registered_users.example.json in registered_users.json.
 
 4. **Installa le dipendenze**
     ```bash
