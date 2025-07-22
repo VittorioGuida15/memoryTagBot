@@ -1,11 +1,20 @@
 import json
+import os
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler
+from dotenv import load_dotenv
 
-TOKEN = "IL_TUO_TOKEN"
+
+load_dotenv()  # Carica le variabili dal .env
+
+bot_token = os.getenv("TOKEN")
+admin_id = os.getenv("ADMIN_USER_ID")
+
+
+TOKEN = bot_token
 FILE_PLAYERS = "players.json"
 FILE_REGISTERED = "registered_users.json"
-ADMIN_USER_ID = "ID_ADMIN"
+ADMIN_USER_ID = admin_id
 
 
 # Carica i dati nei file JSON
@@ -72,7 +81,7 @@ async def register(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(f"🔐 Registrazione completata!\n nome: {name}\n id: {user_id}")
 
-# link - solo per Vittorio
+# link
 async def link(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if str(update.effective_user.id) != str(ADMIN_USER_ID):
         await update.message.reply_text("⛔ Solo l'amministratore può usare questo comando.")
@@ -117,7 +126,7 @@ async def check_mentions(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for nickname, user_id in PLAYER_TAGS.items():
         if nickname in message_text:
             name = REGISTERED_USERS.get(user_id, "Utente")
-            mention = f"[{name}](tg://user?id={user_id})"
+            mention = f"[{name}](tg://user?id={user_id})" 
             mentioned.append(mention)
 
     if mentioned:
@@ -160,6 +169,7 @@ async def sync_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     except Exception as e:
         await update.message.reply_text(f"⚠️ Impossibile ottenere informazioni sull'utente. Errore: {e}")
+
 
 
 
@@ -209,7 +219,7 @@ async def remove(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if len(context.args) != 1:
-        await update.message.reply_text("❌ Usa il comando così: /elimina user_id")
+        await update.message.reply_text("❌ Usa il comando così: /remove user_id")
         return
 
     user_id = context.args[0]
@@ -237,28 +247,38 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if len(context.args) != 1:
-        await update.message.reply_text("❌ Usa il comando così: /cerca nome")
+        await update.message.reply_text("❌ Usa il comando così: /search nome")
         return
 
     query = context.args[0].lower()
-
     risultati = []
 
-    # Cerca per nome Telegram (REGISTERED_USERS)
-    for user_id, nome in REGISTERED_USERS.items():
-        if query in nome.lower():
-            risultati.append(f"TG: {nome} (ID: {user_id})")
+    # Primo ciclo: cerca per nome Telegram
+    for user_id, nome_tg in REGISTERED_USERS.items():
+        if query in nome_tg.lower():
+            # Cerca nickname Clash associato all'id
+            nick_clash = None
+            for nick, uid in PLAYER_TAGS.items():
+                if uid == user_id:
+                    nick_clash = nick
+                    break
+            if nick_clash:
+                risultati.append(f"Clash: {nick_clash} |TG: {nome_tg} | ID: {user_id}")
+            else:
+                risultati.append(f"Clash: {nick_clash} |TG: {nome_tg} | ID: {user_id}")
 
-    # Cerca per nickname Clash (PLAYER_TAGS)
-    for nick, user_id in PLAYER_TAGS.items():
-        if query == nick.lower():
-            nome_tg = REGISTERED_USERS.get(user_id, "Nome TG non trovato")
-            risultati.append(f"Clash: {nick}")
+    # Se non ho trovato nulla nel primo ciclo, cerco nel secondo
+    if not risultati:
+        for nick_clash, user_id in PLAYER_TAGS.items():
+            if query == nick_clash.lower():
+                nome_tg = REGISTERED_USERS.get(user_id, "Nome TG non trovato")
+                risultati.append(f"Clash: {nick_clash} |TG: {nome_tg} | ID: {user_id}")
 
     if risultati:
         await update.message.reply_text("🔍 Risultati ricerca:\n" + "\n".join(risultati))
     else:
         await update.message.reply_text("❌ Nessun risultato trovato per: " + query)
+
 
 
 # list_players
@@ -275,7 +295,7 @@ async def list_players(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for user_id, nome_tg in REGISTERED_USERS.items():
         # Cerca il nick Clash associato
         nick_clash = next((nick for nick, uid in PLAYER_TAGS.items() if uid == user_id), "(non assegnato)")
-        lines.append(f"ID: {user_id} | Nome TG: {nome_tg} | Nick Clash: {nick_clash}")
+        lines.append(f"Clash: {nick_clash} |TG: {nome_tg} | ID: {user_id}")
 
     risposta = "📋 Lista utenti registrati:\n" + "\n".join(lines)
     await update.message.reply_text(risposta)
