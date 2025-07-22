@@ -36,7 +36,7 @@ Un semplice bot Telegram scritto in Python che rileva automaticamente la presenz
    cd memoryTagBot
 
 2. **Configurazione**
-  - Crea un file .env e inserisci il valore delle variabili TOKEN e ADMIN_USER_ID: 
+Crea il file .env e inserisci il valore delle variabili TOKEN e ADMIN_USER_ID:
 
    ```bash
    TOKEN = "TUO_TOKEN_BOT"
