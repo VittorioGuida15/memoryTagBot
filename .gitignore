@@ -1,5 +1,9 @@
-#ignora lambiente vistuale
+#ignora l'ambiente vistuale
 .venv
 
 #ignora variabili d'ambiente
 .env
+
+#ignora file 
+players.json
+registered_users.json
