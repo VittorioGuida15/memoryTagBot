@@ -56,7 +56,7 @@ Crea il file .env e inserisci il valore delle variabili TOKEN e ADMIN_USER_ID:
     python memory.py
     
 ## Deploy su PythonAnywhere
-1. **Crea un account gratuito su PythonAnywhere.**
+1. **Crea un account su PythonAnywhere.**
 
 2. **Carica i file memory.py, players.json e registered_users.json (vuoti o già popolati) nella tua directory di lavoro.**
 
