@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler
 from dotenv import load_dotenv
@@ -112,6 +113,11 @@ async def link(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+# Converte un nickname in una regex flessibile che accetta lettere ripetute es: 'ahccu' -> a+h+c+c+u+
+def nickname_to_fuzzy_regex(nickname):
+
+    return ''.join(f"{re.escape(char)}+" for char in nickname)
+
 # tagga
 async def check_mentions(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reload_data()
@@ -124,9 +130,10 @@ async def check_mentions(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mentioned = []
 
     for nickname, user_id in PLAYER_TAGS.items():
-        if nickname in message_text:
+        fuzzy_pattern = nickname_to_fuzzy_regex(nickname.lower())
+        if re.search(rf"\b{fuzzy_pattern}\b", message_text):
             name = REGISTERED_USERS.get(user_id, "Utente")
-            mention = f"[{name}](tg://user?id={user_id})" 
+            mention = f"[{name}](tg://user?id={user_id})"
             mentioned.append(mention)
 
     if mentioned:
@@ -135,6 +142,7 @@ async def check_mentions(update: Update, context: ContextTypes.DEFAULT_TYPE):
         response = "✅ Nessun giocatore menzionato nel messaggio."
 
     await update.message.reply_text(response, parse_mode="Markdown")
+
 
 
 # syncname user_id
