@@ -15,7 +15,7 @@ Un semplice bot Telegram scritto in Python che facilita la menzione automatica d
 
 2. Fase di collagamento (mappatura nomi)
 
-    - l'amministratore del bot usando il comando /link potrà collegare gli id registrati con un nickname a sua scelta
+    - L'admin del bot usando il comando /link potrà collegare gli id registrati con un nickname a sua scelta
     - Una volta completato il collegamento, il bot riconoscerà quella persona con il nickname appena inserito.
 
 3. Fase operativa (comando /tagga)
