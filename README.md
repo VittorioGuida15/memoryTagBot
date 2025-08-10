@@ -41,14 +41,14 @@ Un semplice bot che facilita la menzione automatica dei membri di un gruppo Tele
 
 ## Comandi disponibili nel bot:
 
-- /register - Registra il tuo ID Telegram con il tuo nome
-- /tagga - Tagga i membri presenti nel messaggio corrente
-- /link - Collega un nickname a un ID Telegram (solo admin)
-- /syncname - Sincronizza il nome di un utente registrato tramite il suo ID (solo admin)
-- /update - Aggiorna il nick di un utente (solo admin)
-- /remove - Rimuove un utente dal sistema (solo admin)
-- /search - Cerca l'ID di un utente (solo admin)
-- /listplayers - Mostra tutti i nickname registrati (solo admin)
+- /register - Registra il tuo ID Telegram con il tuo nome (la registrazione di default avviene in automatico).
+- /tagga - Tagga i membri presenti nel messaggio corrente.
+- /link - Collega un nickname a un ID Telegram (solo admin).
+- /syncname - Sincronizza il nome di un utente registrato tramite il suo ID (solo admin).
+- /update - Aggiorna il nick di un utente (solo admin).
+- /remove - Rimuove un utente dal sistema (solo admin).
+- /search - Cerca l'ID di un utente (solo admin).
+- /listplayers - Mostra tutti i nickname registrati (solo admin).
 
 ---
 
