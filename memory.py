@@ -13,8 +13,13 @@ admin_id = os.getenv("ADMIN_USER_ID")
 
 
 TOKEN = bot_token
-FILE_PLAYERS = "players.json"
-FILE_REGISTERED = "registered_users.json"
+
+# Percorso per i file di dati, configurabile tramite variabile d'ambiente DATA_DIR.
+# Se la variabile d'ambiente DATA_DIR non è impostata, usa la cartella corrente ('.') per test locali.
+DATA_DIR = os.getenv("DATA_DIR", ".")
+FILE_PLAYERS = os.path.join(DATA_DIR, "players.json")
+FILE_REGISTERED = os.path.join(DATA_DIR, "registered_users.json")
+
 ADMIN_USER_ID = admin_id
 
 
@@ -46,10 +51,14 @@ REGISTERED_USERS = load_registered_users()
 
 # Salva i dati nel file JSON
 def save_registered_users(data):
+    # Assicura che la directory esista prima di scrivere il file
+    os.makedirs(os.path.dirname(FILE_REGISTERED), exist_ok=True)
     with open(FILE_REGISTERED, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 def save_player_tags(tags):
+    # Assicura che la directory esista prima di scrivere il file
+    os.makedirs(os.path.dirname(FILE_PLAYERS), exist_ok=True)
     with open(FILE_PLAYERS, "w", encoding="utf-8") as f:
         json.dump(tags, f, indent=2, ensure_ascii=False)
 
