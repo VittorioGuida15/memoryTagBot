@@ -1,6 +1,7 @@
 # memoryTagBot
 
-Un semplice bot che facilita la menzione automatica dei membri di un gruppo Telegram a partire da dei nickname assegnati ad essi.
+Un semplice bot Telegram per gestire e riconoscere
+utenti menzionati in chat tramite tag personalizzati.
 
 ---
 
