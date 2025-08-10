@@ -1,1 +1,1 @@
-python memory.py
+worker: python memory.py
