@@ -75,8 +75,8 @@ def reload_data():
     PLAYER_TAGS = load_player_tags() 
 
 # carica i tag e id all'avvio
-PLAYER_TAGS = load_player_tags()
-REGISTERED_USERS = load_registered_users()
+PLAYER_TAGS = {}
+REGISTERED_USERS = {}
 
 
 # Salva i dati nel file JSON
@@ -353,6 +353,10 @@ if __name__ == '__main__':
     # Esegui la migrazione dei dati all'avvio, se necessario.
     migrate_data_if_needed()
 
+    # Ricarica i dati dai file DOPO la potenziale migrazione,
+    # per assicurarsi che il bot usi i dati più recenti.
+    reload_data()
+
     app = ApplicationBuilder().token(TOKEN).build()
     
     # Handler comandi
@@ -369,3 +373,5 @@ if __name__ == '__main__':
  
     print("Bot in esecuzione...")
     app.run_polling()
+
+    
