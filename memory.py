@@ -4,6 +4,8 @@ import re
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler
 from dotenv import load_dotenv
+import shutil
+import pathlib
 
 
 load_dotenv()  # Carica le variabili dal .env
@@ -14,13 +16,41 @@ admin_id = os.getenv("ADMIN_USER_ID")
 
 TOKEN = bot_token
 
-# Percorso per i file di dati, configurabile tramite variabile d'ambiente DATA_DIR.
-# Se la variabile d'ambiente DATA_DIR non è impostata, usa la cartella corrente ('.') per test locali.
+# Percorso per i file di dati, configurabile tramite variabile d'ambiente.
+# Su Render, imposteremo la variabile d'ambiente DATA_DIR a /data
+# Se la variabile non è impostata, usa la cartella corrente ('.') per test locali.
 DATA_DIR = os.getenv("DATA_DIR", ".")
 FILE_PLAYERS = os.path.join(DATA_DIR, "players.json")
 FILE_REGISTERED = os.path.join(DATA_DIR, "registered_users.json")
 
 ADMIN_USER_ID = admin_id
+
+
+def migrate_data_if_needed():
+    """
+    Copia i file di dati dalla root del progetto al volume persistente,
+    se il volume è vuoto e i file sorgente esistono.
+    Questo serve per il primo deploy su una piattaforma come Railway.
+    """
+    source_files = ["players.json", "registered_users.json"]
+    dest_dir = pathlib.Path(DATA_DIR)
+
+    # Esegui solo se DATA_DIR è una directory reale (non '.')
+    if not dest_dir.is_dir():
+        return
+
+    print("Controllo migrazione dati...")
+    for filename in source_files:
+        source_path = pathlib.Path(filename)
+        dest_path = dest_dir / filename
+
+        if source_path.is_file() and not dest_path.is_file():
+            print(f"-> Trovato '{filename}' nella sorgente, ma non nel volume. Copia in corso...")
+            try:
+                shutil.copy2(source_path, dest_path)
+                print(f"-> Migrazione di '{filename}' completata con successo.")
+            except Exception as e:
+                print(f"-> ERRORE durante la migrazione di '{filename}': {e}")
 
 
 # Carica i dati nei file JSON
@@ -320,6 +350,9 @@ async def list_players(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == '__main__':
+    # Esegui la migrazione dei dati all'avvio, se necessario.
+    migrate_data_if_needed()
+
     app = ApplicationBuilder().token(TOKEN).build()
     
     # Handler comandi
