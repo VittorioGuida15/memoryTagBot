@@ -1,6 +1,6 @@
 # memoryTagBot
 
-Un semplice bot Telegram scritto in Python che facilita la menzione automatica dei membri di un gruppo Telegram a partira da dei nickname assegnati ad essi.
+Un semplice bot che facilita la menzione automatica dei membri di un gruppo Telegram a partire da dei nickname assegnati ad essi.
 
 ---
 
@@ -9,13 +9,13 @@ Un semplice bot Telegram scritto in Python che facilita la menzione automatica d
 
 1. Fase di registrazione ID
 
-    - All’avvio, il bot monitora i messaggi inviati nel gruppo configurato.
+    - All’avvio, il bot monitora i messaggi inviati nel gruppo alla quale è stato aggiunto.
     - Quando un utente scrive un qualsiasi messaggio, il bot registra automaticamente il suo ID Telegram associandolo al nome visualizzato.
-    - Questa fase serve per creare un archivio che permetterà di mappare i nomi di gioco con i tag Telegram reali.
+    - Questa fase serve per creare un archivio che permetterà di mappare i nickname scelti dall'Admin con gli ID Telegram.
 
 2. Fase di collagamento (mappatura nomi)
 
-    - L'admin del bot usando il comando /link potrà collegare gli id registrati con un nickname a sua scelta
+    - L'admin del bot usando il comando /link potrà collegare gli ID registrati con un nickname a sua scelta.
     - Una volta completato il collegamento, il bot riconoscerà quella persona con il nickname appena inserito.
 
 3. Fase operativa (comando /tagga)
