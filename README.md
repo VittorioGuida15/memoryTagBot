@@ -4,7 +4,7 @@ Un semplice bot Telegram scritto in Python che facilita la menzione automatica d
 
 ---
 
-# Flusso di esecuzione
+## Flusso di esecuzione
 **Il funzionamento avviene in tre fasi principali:**
 
 1. Fase di registrazione ID
