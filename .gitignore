@@ -1,5 +1,6 @@
 #ignora l'ambiente vistuale
 .venv
+
 #ignora file di configurazione
 .vscode/
 
