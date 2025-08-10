@@ -4,8 +4,6 @@ import re
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler
 from dotenv import load_dotenv
-import shutil
-import pathlib
 
 
 load_dotenv()  # Carica le variabili dal .env
@@ -15,42 +13,9 @@ admin_id = os.getenv("ADMIN_USER_ID")
 
 
 TOKEN = bot_token
-
-# Percorso per i file di dati, configurabile tramite variabile d'ambiente.
-# Su Render, imposteremo la variabile d'ambiente DATA_DIR a /data
-# Se la variabile non è impostata, usa la cartella corrente ('.') per test locali.
-DATA_DIR = os.getenv("DATA_DIR", ".")
-FILE_PLAYERS = os.path.join(DATA_DIR, "players.json")
-FILE_REGISTERED = os.path.join(DATA_DIR, "registered_users.json")
-
+FILE_PLAYERS = "players.json"
+FILE_REGISTERED = "registered_users.json"
 ADMIN_USER_ID = admin_id
-
-
-def migrate_data_if_needed():
-    """
-    Copia i file di dati dalla root del progetto al volume persistente,
-    se il volume è vuoto e i file sorgente esistono.
-    Questo serve per il primo deploy su una piattaforma come Railway.
-    """
-    source_files = ["players.json", "registered_users.json"]
-    dest_dir = pathlib.Path(DATA_DIR)
-
-    # Esegui solo se DATA_DIR è una directory reale (non '.')
-    if not dest_dir.is_dir():
-        return
-
-    print("Controllo migrazione dati...")
-    for filename in source_files:
-        source_path = pathlib.Path(filename)
-        dest_path = dest_dir / filename
-
-        if source_path.is_file() and not dest_path.is_file():
-            print(f"-> Trovato '{filename}' nella sorgente, ma non nel volume. Copia in corso...")
-            try:
-                shutil.copy2(source_path, dest_path)
-                print(f"-> Migrazione di '{filename}' completata con successo.")
-            except Exception as e:
-                print(f"-> ERRORE durante la migrazione di '{filename}': {e}")
 
 
 # Carica i dati nei file JSON
@@ -60,7 +25,7 @@ def load_registered_users():
             return json.load(f)
     except FileNotFoundError:
         return {}
-    
+
 def load_player_tags():
     try:
         with open(FILE_PLAYERS, "r", encoding="utf-8") as f:
@@ -68,27 +33,23 @@ def load_player_tags():
     except FileNotFoundError:
         return {}
 
-#ricarica file    
+#ricarica file
 def reload_data():
     global REGISTERED_USERS, PLAYER_TAGS
     REGISTERED_USERS = load_registered_users()
-    PLAYER_TAGS = load_player_tags() 
+    PLAYER_TAGS = load_player_tags()
 
 # carica i tag e id all'avvio
-PLAYER_TAGS = {}
-REGISTERED_USERS = {}
+PLAYER_TAGS = load_player_tags()
+REGISTERED_USERS = load_registered_users()
 
 
 # Salva i dati nel file JSON
 def save_registered_users(data):
-    # Assicura che la directory esista prima di scrivere il file
-    os.makedirs(os.path.dirname(FILE_REGISTERED), exist_ok=True)
     with open(FILE_REGISTERED, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 def save_player_tags(tags):
-    # Assicura che la directory esista prima di scrivere il file
-    os.makedirs(os.path.dirname(FILE_PLAYERS), exist_ok=True)
     with open(FILE_PLAYERS, "w", encoding="utf-8") as f:
         json.dump(tags, f, indent=2, ensure_ascii=False)
 
@@ -203,7 +164,7 @@ async def sync_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         user = await context.bot.get_chat(int(target_id))
         nuovo_nome = user.full_name
-        vecchio_nome = REGISTERED_USERS[target_id] 
+        vecchio_nome = REGISTERED_USERS[target_id]
 
         REGISTERED_USERS[target_id] = nuovo_nome
         save_registered_users(REGISTERED_USERS)
@@ -350,15 +311,8 @@ async def list_players(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == '__main__':
-    # Esegui la migrazione dei dati all'avvio, se necessario.
-    migrate_data_if_needed()
-
-    # Ricarica i dati dai file DOPO la potenziale migrazione,
-    # per assicurarsi che il bot usi i dati più recenti.
-    reload_data()
-
     app = ApplicationBuilder().token(TOKEN).build()
-    
+
     # Handler comandi
     app.add_handler(CommandHandler("register", register))
     app.add_handler(CommandHandler("link", link))
@@ -370,8 +324,6 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler("listplayers", list_players))
 
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), auto_register_user))
- 
+
     print("Bot in esecuzione...")
     app.run_polling()
-
-    
