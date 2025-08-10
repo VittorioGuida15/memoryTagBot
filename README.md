@@ -1,7 +1,7 @@
 # memoryTagBot
 
 Un semplice bot Telegram per gestire e riconoscere
-utenti menzionati in chat tramite tag personalizzati.
+utenti menzionati in chat tramite nickname personalizzati.
 
 ---
 
